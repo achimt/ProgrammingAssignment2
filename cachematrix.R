@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
      set <- function(y) {     # set receives a matrix
           x <<- y             # and puts it into the 'external' x
           m <<- NULL          # its inverse is set to NULL
-     }         # The set function 
+     }         # The set funct
      get <- function(){x} # get returns the matrix x as it was
      set_inverse <- function(solve){m <<- solve}
                # cacheSolve calls this when it is called for the
@@ -23,7 +23,7 @@ makeCacheMatrix <- function(x = matrix()) {
                # once m exists, this will return the inverse matrix
                # when cacheSolve is called
      list(get = get,
-          set_inverse = set_inverse
+          set_inverse = set_inverse,
           get_inverse = get_inverse)
                # this is, I think, a list of the methods in this
                # class. It helps calling functions to access the
@@ -34,10 +34,11 @@ makeCacheMatrix <- function(x = matrix()) {
 ## cacheSolve performs the actual calculation, if that has not
 ## been done before. In the latter case, it recalls the inverse
 ## matrix that has been stored as one of the object's properties. 
+## it is important that cacheSolve is called with a CacheMatrix
+## as an argument - otherwise it will not work!
 
-cacheSolve <- function(x, ...) {   # x is set by makeCacheMatrix
-                                   # as x is an object, it also has
-                                   # methods that can be called. 
+cacheSolve <- function(x, ...) {   # x is an object set by makeCacheMatrix
+                                   # It also has methods that can be called. 
      m <- x$get_inverse()          # this gets the inverse matrix, 
                                    # either from the cache or it will
                                    # be calculated. 
